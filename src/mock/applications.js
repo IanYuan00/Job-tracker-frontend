@@ -1,0 +1,32 @@
+export const mockApplications = [{
+    id: '1',
+    company: 'Canada Wheels',
+    position: 'Junior/Entry level software developer',
+    status: 'Rejected',
+    date: '2026-07-01',
+    note: '',
+},
+{
+    id: '2',
+    company: 'Intuit',
+    position: 'Full stack software developer I',
+    status: 'Interviewing',
+    date: '2026-07-02',
+    note: '',
+},
+{
+    id: '3',
+    company: 'Rebel',
+    position: 'Junior javascript full stack debeloper',
+    status: 'Offer',
+    date: '2026-07-03',
+    note: 'test',
+},
+{
+    id: '4',
+    company: 'Brim Finacial',
+    position: 'Junior software developer',
+    status: 'Applied',
+    date: '2026-07-04',
+    note: '',
+}];
