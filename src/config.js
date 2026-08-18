@@ -1,1 +1,1 @@
-export const API_BASE_URL = 'lively-compassion-production-2668.up.railway.app'
+export const API_BASE_URL = 'https://lively-compassion-production-2668.up.railway.app'
