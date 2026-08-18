@@ -6,10 +6,19 @@ import StatsCard from './components/StatsCard';
 import { STATUS_LIST } from './constants/status.js';
 import { API_BASE_URL } from './config.js';
 
+interface Job {
+  id: string
+  company: string
+  position: string
+  status: string
+  date: string
+  notes?: string
+}
+
 function App() {
-  const [jobs, setJobs] = useState([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editing, setEditing] = useState(null);
+  const [editing, setEditing] = useState<Job | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchStatus, setSearchStatus] = useState('');
   const [sortDirection, setSortDirection] = useState('asc');
@@ -20,7 +29,7 @@ function App() {
       .then((data) => setJobs(data))
   }, []);
 
-  const handleAddJob = async (jobData) => {
+  const handleAddJob = async (jobData: Omit<Job, 'id'>) => {
     const res = await fetch(`${API_BASE_URL}/applications`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -35,7 +44,7 @@ function App() {
     setIsModalOpen(!isModalOpen);
   }
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: string) => {
     const userConfirmed = window.confirm('Are you sure you want to delete the job application?');
     await fetch(`${API_BASE_URL}/applications/${id}`, {
       method: 'DELETE',
@@ -45,12 +54,12 @@ function App() {
     }
   }
 
-  const handleEdit = (id) => {
+  const handleEdit = (id: string) => {
     setIsModalOpen(true);
-    setEditing(jobs.find((job) => job.id === id));
+    setEditing(jobs.find((job) => job.id === id) ?? null);
   }
 
-  const onUpdateJob = async (id, jobData) => {
+  const onUpdateJob = async (id: string, jobData: Partial<Job>) => {
     const res = await fetch(`${API_BASE_URL}/applications/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
@@ -71,7 +80,7 @@ function App() {
     setEditing(null);
   }
 
-  const searchedJob = jobs.filter((job) => {
+  const searchedJob = jobs.filter((job: Job) => {
     const keyword = searchTerm.toLowerCase();
     const matchKeyword = !keyword || job.company.toLowerCase().includes(keyword);
     const matchStatus = !searchStatus || searchStatus === job.status;
