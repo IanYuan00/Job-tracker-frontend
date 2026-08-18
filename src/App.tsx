@@ -4,6 +4,7 @@ import ApplicationForm from './components/ApplicationForm';
 import ApplicationTable from './components/ApplicationTable';
 import StatsCard from './components/StatsCard';
 import { STATUS_LIST } from './constants/status.js';
+import { API_BASE_URL } from './config.js';
 
 function App() {
   const [jobs, setJobs] = useState([]);
@@ -14,13 +15,13 @@ function App() {
   const [sortDirection, setSortDirection] = useState('asc');
 
   useEffect(() => {
-    fetch('http://localhost:3000/applications')
+    fetch(`${API_BASE_URL}/applications`)
       .then((res) => res.json())
       .then((data) => setJobs(data))
   }, []);
 
   const handleAddJob = async (jobData) => {
-    const res = await fetch('http://localhost:3000/applications', {
+    const res = await fetch(`${API_BASE_URL}/applications`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(jobData)
@@ -36,7 +37,7 @@ function App() {
 
   const handleDelete = async (id) => {
     const userConfirmed = window.confirm('Are you sure you want to delete the job application?');
-    await fetch(`http://localhost:3000/applications/${id}`, {
+    await fetch(`${API_BASE_URL}/applications/${id}`, {
       method: 'DELETE',
     })
     if (userConfirmed) {
@@ -50,7 +51,7 @@ function App() {
   }
 
   const onUpdateJob = async (id, jobData) => {
-    const res = await fetch(`http://localhost:3000/applications/${id}`, {
+    const res = await fetch(`${API_BASE_URL}/applications/${id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(jobData)
