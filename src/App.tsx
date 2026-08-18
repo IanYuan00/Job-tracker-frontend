@@ -130,7 +130,7 @@ function App() {
         <div className='modal-overlay' onClick={() => setIsModalOpen(false)}>
           <div className='modal-content' onClick={(e) => e.stopPropagation()}>
             <ApplicationForm
-              onSubmitJob={(jobData) => {
+              onSubmitJob={(jobData: Job) => {
                 if (editing) {
                   onUpdateJob(editing.id, jobData);
                 } else {
