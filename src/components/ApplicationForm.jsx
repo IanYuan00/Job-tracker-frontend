@@ -60,7 +60,7 @@ function ApplicationForm({ onSubmitJob, editJob, onCancelClick }) {
                         <textarea
                             type='text'
                             value={notes}
-                            onChange={(e) => setNote(e.target.value)}
+                            onChange={(e) => setNotes(e.target.value)}
                         />
                     </label>
                 </div>
