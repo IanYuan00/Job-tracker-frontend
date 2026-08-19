@@ -52,7 +52,7 @@ function ApplicationTable({ jobs, onDelete, onEdit, onSortClick, sortDirection }
                             </tr>
                             {expandedId === job.id && (
                                 <tr className='expanded-notes'>
-                                    <td colSpan={6}>{job.note || 'No notes yet.'}</td>
+                                    <td colSpan={6}>{job.notes || 'No notes yet.'}</td>
                                 </tr>
                             )}
                         </React.Fragment>

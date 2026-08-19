@@ -6,11 +6,11 @@ function ApplicationForm({ onSubmitJob, editJob, onCancelClick }) {
     const [position, setPosition] = useState(editJob ? editJob.position : '');
     const [status, setStatus] = useState(editJob ? editJob.status : STATUS_LIST[0].value);
     const [date, setDate] = useState(editJob ? editJob.date : '');
-    const [note, setNote] = useState(editJob ? editJob.note : '');
+    const [notes, setNotes] = useState(editJob ? editJob.notes : '');
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onSubmitJob({ company, position, status, date, note })
+        onSubmitJob({ company, position, status, date, notes })
     }
     return (
         <>
@@ -59,7 +59,7 @@ function ApplicationForm({ onSubmitJob, editJob, onCancelClick }) {
                         Notes:
                         <textarea
                             type='text'
-                            value={note}
+                            value={notes}
                             onChange={(e) => setNote(e.target.value)}
                         />
                     </label>
