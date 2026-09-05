@@ -7,9 +7,21 @@ function ApplicationForm({ onSubmitJob, editJob, onCancelClick }) {
     const [status, setStatus] = useState(editJob ? editJob.status : STATUS_LIST[0].value);
     const [date, setDate] = useState(editJob ? editJob.date : '');
     const [notes, setNotes] = useState(editJob ? editJob.notes : '');
+    const [error, setError] = useState({});
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const newErrors = {};
+        if (!company.trim()) {
+            newErrors.company = 'Company is required!';
+        } if (!position.trim()) {
+            newErrors.position = 'Position is required!';
+        }
+        setError(newErrors);
+        if (Object.keys(newErrors).length > 0) {
+            return;
+        }
+
         onSubmitJob({ company, position, status, date, notes })
     }
     return (
@@ -22,7 +34,9 @@ function ApplicationForm({ onSubmitJob, editJob, onCancelClick }) {
                             type="text"
                             value={company}
                             onChange={(e) => setCompany(e.target.value)}
+                            style={{ borderColor: error.company ? 'red' : undefined }}
                         />
+                        {error.company && <p style={{ color: 'red', fontSize: '12px' }}>{error.company}</p>}
                     </label>
                     <label>
                         Position:
@@ -30,7 +44,9 @@ function ApplicationForm({ onSubmitJob, editJob, onCancelClick }) {
                             type="text"
                             value={position}
                             onChange={(e) => setPosition(e.target.value)}
+                            style={{ borderColor: error.position ? 'red' : undefined }}
                         />
+                        {error.position && <p style={{ color: 'red', fontSize: '12px' }}>{error.position}</p>}
                     </label>
                 </div>
                 <div className='form-input'>

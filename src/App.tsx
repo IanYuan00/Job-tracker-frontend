@@ -35,6 +35,12 @@ function App() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(jobData)
     })
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      alert(errorData.error || 'Something went wrong...');
+      return;
+    }
     const newJob = await res.json();
     setJobs([newJob, ...jobs]);
   }
@@ -46,12 +52,21 @@ function App() {
 
   const handleDelete = async (id: string) => {
     const userConfirmed = window.confirm('Are you sure you want to delete the job application?');
-    await fetch(`${API_BASE_URL}/applications/${id}`, {
+    if (!userConfirmed) {
+      return;
+    }
+
+    const res = await fetch(`${API_BASE_URL}/applications/${id}`, {
       method: 'DELETE',
     })
-    if (userConfirmed) {
-      setJobs(jobs.filter((job) => job.id != id));
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      alert(errorData.error || 'Something went wrong...');
+      return;
     }
+    setJobs(jobs.filter((job) => job.id != id));
+
   }
 
   const handleEdit = (id: string) => {
@@ -65,6 +80,12 @@ function App() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(jobData)
     })
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      alert(errorData.error || 'Something went wrong...');
+      return;
+    }
     const updatedJob = await res.json();
     setJobs(jobs.map((job) => {
       if (job.id === id) {
