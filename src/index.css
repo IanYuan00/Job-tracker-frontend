@@ -49,40 +49,128 @@ button:hover {
   background: var(--border);
 }
 
-.table-wrapper {
+.icon-btn {
+
+  font-size: 13px;
+  background: transparent;
+}
+
+.job-card {
+  background: #ffffff;
   border: 0.5px solid var(--border);
   border-radius: 12px;
-  overflow: hidden;
+  padding: 16px 20px;
+  transition: box-shadow 0.15s ease;
 }
 
-table {
-  border-collapse: collapse;
-  width: 100%;
-  background: #fff;
+.job-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--border);
 }
 
-th,
-td {
+.job-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.job-card__company {
+  font-size: 20px;
+  font-weight: 500;
+  color: #1f1f1d;
+  margin: 0 0 2px;
+}
+
+.job-card__position {
   font-size: 17px;
-  padding: 8px 12px;
-  text-align: left;
-  border-bottom: 0.5px solid var(--border);
+  color: #6b6a65;
+  margin: 0;
 }
 
-.table-notes {
-  transition: all 0.2s ease;
+.job-card__date {
+  font-size: 15px;
+  color: #9a988f;
 }
 
-.table-notes:hover {
-  background: #f2ede6;
+.job-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.expanded-notes {
-  background: #f2ede6;
+.job-card__actions {
+  display: flex;
+  gap: 8px;
 }
 
-tbody tr:last-child td {
-  border-bottom: none;
+.job-card__details {
+  max-height: 0;
+  overflow: hidden;
+  border-top: 0.5px solid transparent;
+  margin-top: 8px;
+  padding-top: 0;
+  transition: max-height 0.3s ease, padding-top 0.3s ease, border-color 0.3s ease;
+}
+
+.job-card__details--open {
+  max-height: 500px;
+  padding-top: 8px;
+  border-top-color: var(--border);
+}
+
+.timeline-item {
+  display: flex;
+  gap: 10px;
+}
+
+.timeline-marker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timeline-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #c7c5bd;
+  flex-shrink: 0;
+}
+
+.timeline-dot--current {
+  background: #378ADD;
+}
+
+.timeline-line {
+  width: 1.5px;
+  flex: 1;
+  background: var(--border);
+  min-height: 20px;
+}
+
+.timeline-content {
+  padding-bottom: 10px;
+}
+
+.timeline-status {
+  margin: 0;
+}
+
+.timeline-status--current {
+  font-weight: 500;
+}
+
+.timeline-date {
+  margin: 0;
+  font-size: 14px;
+  color: #999;
+}
+
+.job-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .status-badge {

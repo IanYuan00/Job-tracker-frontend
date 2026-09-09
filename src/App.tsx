@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 //import { mockApplications } from './mock/applications.js';
 import ApplicationForm from './components/ApplicationForm';
-import ApplicationTable from './components/ApplicationTable';
+import ApplicationList from './components/ApplicationList.jsx';
 import StatsCard from './components/StatsCard';
 import { STATUS_LIST } from './constants/status.js';
 import { API_BASE_URL } from './config.js';
@@ -145,7 +145,7 @@ function App() {
           ))}
         </select>
       </div>
-      <ApplicationTable jobs={sortedJobs} onDelete={handleDelete} onEdit={handleEdit} onSortClick={handleSortClick} sortDirection={sortDirection} />
+      <ApplicationList jobs={sortedJobs} onDelete={handleDelete} onEdit={handleEdit} onSortClick={handleSortClick} sortDirection={sortDirection} />
       <p>Click a row to expand notes</p>
       {isModalOpen && (
         <div className='modal-overlay' onClick={() => setIsModalOpen(false)}>
