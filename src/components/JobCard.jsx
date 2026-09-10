@@ -1,12 +1,22 @@
 import StatusBadge from "./StatusBadge";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Pencil, Trash2, ChevronUp, ChevronDown } from 'lucide-react';
 import { API_BASE_URL } from "../config";
 
 function JobCard({ job, onEdit, onDelete }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [historyData, setHistoryData] = useState([]);
-    const displayHistory = historyData.length > 0 ? historyData : [{ id: 'default', toStatus: 'Applied', changedAt: job.date }]
+
+    const fetchHistoryData = async () => {
+        const res = await fetch(`${API_BASE_URL}/applications/${job.id}/history`);
+        const data = await res.json();
+        setHistoryData(data);
+    }
+
+    useEffect(() => {
+        if (!isExpanded) return;
+        fetchHistoryData();
+    }, [job.status]);
 
     const handleExpandClick = async () => {
         if (isExpanded) {
@@ -14,9 +24,7 @@ function JobCard({ job, onEdit, onDelete }) {
             return;
         }
         setIsExpanded(true);
-        const res = await fetch(`${API_BASE_URL}/applications/${job.id}/history`);
-        const data = await res.json();
-        setHistoryData(data);
+        await fetchHistoryData();
     }
     return (
         <div className="job-card" onClick={() => handleExpandClick()}>
@@ -52,8 +60,8 @@ function JobCard({ job, onEdit, onDelete }) {
                 <p>{job.notes || 'No notes yet.'}</p>
                 <p className="detail-label">HISTORY</p>
                 <div className="timeline">
-                    {displayHistory.map((data, index) => {
-                        const isCurrent = index === displayHistory.length - 1;
+                    {historyData.map((data, index) => {
+                        const isCurrent = index === historyData.length - 1;
                         return (
                             <div key={data.id} className="timeline-item">
                                 <div className="timeline-marker">
