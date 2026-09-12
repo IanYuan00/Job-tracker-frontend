@@ -28,6 +28,14 @@ body {
   padding: 24px;
 }
 
+.sticky-header {
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 10;
+  padding-bottom: 12px;
+}
+
 .header {
   margin-bottom: 24px;
   display: flex;
@@ -279,6 +287,27 @@ button.primary:hover {
   width: 25%;
   margin-left: 15px;
   font-size: 18px;
+}
+
+.sortbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12px;
+  padding-bottom: 15px;
+}
+
+.sortbar select {
+  width: auto;
+  font-size: 18px;
+
+}
+
+.sortbar-left,
+.sortbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .stats {

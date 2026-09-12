@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Pencil, Trash2, ChevronUp, ChevronDown } from 'lucide-react';
 import { API_BASE_URL } from "../config";
 
-function JobCard({ job, onEdit, onDelete }) {
+function JobCard({ job, onEdit, onDelete, expandAll }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [historyData, setHistoryData] = useState([]);
 
@@ -17,6 +17,15 @@ function JobCard({ job, onEdit, onDelete }) {
         if (!isExpanded) return;
         fetchHistoryData();
     }, [job.status]);
+
+    useEffect(() => {
+        if (!expandAll) return;
+        if (expandAll.action === 'expand') {
+            setIsExpanded(true);
+        } else {
+            setIsExpanded(false);
+        }
+    }, [expandAll])
 
     const handleExpandClick = async () => {
         if (isExpanded) {

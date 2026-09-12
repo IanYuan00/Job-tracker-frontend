@@ -5,6 +5,7 @@ import ApplicationList from './components/ApplicationList.jsx';
 import StatsCard from './components/StatsCard';
 import { STATUS_LIST } from './constants/status.js';
 import { API_BASE_URL } from './config.js';
+import { Key } from 'lucide-react';
 
 interface Job {
   id: string
@@ -21,7 +22,8 @@ function App() {
   const [editing, setEditing] = useState<Job | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchStatus, setSearchStatus] = useState('');
-  const [sortDirection, setSortDirection] = useState('asc');
+  const [sortDirection, setSortDirection] = useState('desc');
+  const [expandAll, setExpandAll] = useState(null);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/applications`)
@@ -108,45 +110,71 @@ function App() {
     return matchKeyword && matchStatus;
   })
 
-  const handleSortClick = () => {
-    setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
-  }
-
   const sortedJobs = [...searchedJob].sort((a, b) => {
     if (sortDirection === 'asc') {
       return a.date > b.date ? 1 : -1;
     } else {
       return a.date < b.date ? 1 : -1;
     }
-  })
+  });
+
+  const handleExpandAll = () => {
+    setExpandAll({ action: 'expand', key: Date.now() });
+  }
+
+  const handleCollapseAll = () => {
+    setExpandAll({ action: 'collpase', Key: Date.now() });
+  }
 
   return (
     <div className='app'>
-      <div className='header'>
-        <h1>Job Tracker</h1>
-        <button onClick={handleAddClick}>+ Add new application</button>
+      <div className='sticky-header'>
+        <div className='header'>
+          <h1>Job Tracker</h1>
+          <button onClick={handleAddClick}>+ Add new application</button>
+        </div>
+
+        <StatsCard jobs={jobs} />
+
+        <div className='search'>
+          <input
+            type='text'
+            placeholder='Search company name...'
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <select
+            value={searchStatus}
+            onChange={(e) => setSearchStatus(e.target.value)}>
+            <option value=''>Searche by status</option>
+            {STATUS_LIST.map((s) => (
+              <option key={s.value} value={s.value}>
+                {s.value}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className='sortbar'>
+          <div className='sortbar-left'>
+            <span>Sort by</span>
+            <select
+              value={sortDirection}
+              onChange={(e) => setSortDirection(e.target.value)}>
+              <option value='desc'>Date (newest first)</option>
+              <option value='asc'>Date (oldest first)</option>
+            </select>
+          </div>
+          <div className='sortbar-right'>
+            <button onClick={handleExpandAll}>Expand all</button>
+            <button onClick={handleCollapseAll}>Collapse all</button>
+          </div>
+        </div>
       </div>
-      <StatsCard jobs={jobs} />
-      <div className='search'>
-        <input
-          type='text'
-          placeholder='Search company name...'
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <select
-          value={searchStatus}
-          onChange={(e) => setSearchStatus(e.target.value)}>
-          <option value=''>Searche by status</option>
-          {STATUS_LIST.map((s) => (
-            <option key={s.value} value={s.value}>
-              {s.value}
-            </option>
-          ))}
-        </select>
-      </div>
-      <ApplicationList jobs={sortedJobs} onDelete={handleDelete} onEdit={handleEdit} onSortClick={handleSortClick} sortDirection={sortDirection} />
+
+      <ApplicationList jobs={sortedJobs} onDelete={handleDelete} onEdit={handleEdit} expandAll={expandAll} />
       <p>Click a row to expand notes</p>
+
       {isModalOpen && (
         <div className='modal-overlay' onClick={() => setIsModalOpen(false)}>
           <div className='modal-content' onClick={(e) => e.stopPropagation()}>
