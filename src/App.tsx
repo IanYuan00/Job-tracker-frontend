@@ -5,7 +5,6 @@ import ApplicationList from './components/ApplicationList.jsx';
 import StatsCard from './components/StatsCard';
 import { STATUS_LIST } from './constants/status.js';
 import { API_BASE_URL } from './config.js';
-import { Key } from 'lucide-react';
 
 interface Job {
   id: string
