@@ -15,6 +15,11 @@ interface Job {
   notes?: string
 }
 
+interface ExpandAll {
+  action: 'expand' | 'collapse'
+  key: number
+}
+
 function App() {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,7 +27,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchStatus, setSearchStatus] = useState('');
   const [sortDirection, setSortDirection] = useState('desc');
-  const [expandAll, setExpandAll] = useState(null);
+  const [expandAll, setExpandAll] = useState<ExpandAll | null>(null);
 
   useEffect(() => {
     fetch(`${API_BASE_URL}/applications`)
@@ -122,7 +127,7 @@ function App() {
   }
 
   const handleCollapseAll = () => {
-    setExpandAll({ action: 'collpase', Key: Date.now() });
+    setExpandAll({ action: 'collapse', key: Date.now() });
   }
 
   return (
