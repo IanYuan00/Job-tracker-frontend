@@ -1,14 +1,16 @@
 import StatusBadge from "./StatusBadge";
 import { useState, useEffect } from "react";
 import { Pencil, Trash2, ChevronUp, ChevronDown } from 'lucide-react';
-import { API_BASE_URL } from "../config";
+import { API_BASE_URL, getAuthHeaders } from "../config";
 
 function JobCard({ job, onEdit, onDelete, expandAll }) {
     const [isExpanded, setIsExpanded] = useState(false);
     const [historyData, setHistoryData] = useState([]);
 
     const fetchHistoryData = async () => {
-        const res = await fetch(`${API_BASE_URL}/applications/${job.id}/history`);
+        const res = await fetch(`${API_BASE_URL}/applications/${job.id}/history`, {
+            headers: getAuthHeaders()
+        });
         const data = await res.json();
         setHistoryData(data);
     }
