@@ -4,9 +4,9 @@ import Register from './components/Register.jsx';
 import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
-function LoginPage({ setIsLoggedIn }) {
+function LoginPage({ setIsLoggedIn }: { setIsLoggedIn: (value: boolean) => void }) {
   const navigate = useNavigate();
-  const handleLoginSuccess = (token, username) => {
+  const handleLoginSuccess = (token: string, username: string) => {
     localStorage.setItem('token', token);
     localStorage.setItem('username', username);
     setIsLoggedIn(true);
@@ -26,7 +26,7 @@ function RegisterPage() {
   return <Register onRegisterSuccess={handleRegisterSuccess} />
 }
 
-function MainPageWrapper({ setIsLoggedIn }) {
+function MainPageWrapper({ setIsLoggedIn }: { setIsLoggedIn: (value: boolean) => void }) {
   const navigate = useNavigate();
   const handleLogOut = () => {
     localStorage.removeItem('token');

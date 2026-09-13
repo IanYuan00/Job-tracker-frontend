@@ -19,7 +19,7 @@ interface ExpandAll {
     key: number
 }
 
-function MainPage({ onLogOut }) {
+function MainPage({ onLogOut }: { onLogOut: () => void }) {
     const [jobs, setJobs] = useState<Job[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [editing, setEditing] = useState<Job | null>(null);
